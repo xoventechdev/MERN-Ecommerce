@@ -6,10 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      // Define proxy rules here
       "/api": {
-        target: "http://localhost:3030",
+        target: "http://localhost:3030", // Your backend server URL
         changeOrigin: true,
-        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""), // Remove /api prefix when forwarding request
       },
     },
   },
