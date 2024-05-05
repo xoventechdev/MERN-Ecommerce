@@ -1,7 +1,7 @@
-import SendEmail from "../utility/EmailHelper";
-import UserModel from "../models/UserModel";
+import SendEmail from "../utility/EmailHelper.js";
+import UserModel from "../models/UserModel.js";
 
-exports.UserOTPRequest = async (req, res) => {
+const UserOTPRequest = async (req, res) => {
   try {
     const { email } = req.body;
     const otpGenerate = Math.floor(100000 + Math.random() * 900000);
@@ -18,7 +18,7 @@ exports.UserOTPRequest = async (req, res) => {
   }
 };
 
-exports.UserOTPVerify = async (req, res) => {
+const UserOTPVerify = async (req, res) => {
   try {
     const { email, otp } = req.body;
     const user = await UserModel.findOne({ email: email, otp: otp });
@@ -41,7 +41,7 @@ exports.UserOTPVerify = async (req, res) => {
   }
 };
 
-exports.ProfileService = async (req, res) => {
+const ProfileService = async (req, res) => {
   try {
     const user_id = req.headers.user_id;
     const user = await UserModel.findById(user_id);
@@ -54,7 +54,7 @@ exports.ProfileService = async (req, res) => {
   }
 };
 
-exports.UpdateProfileService = async (req, res) => {
+const UpdateProfileService = async (req, res) => {
   try {
     const user_id = req.headers.user_id;
     await UserModel.findByIdAndUpdate(user_id, req.body);
@@ -66,3 +66,6 @@ exports.UpdateProfileService = async (req, res) => {
     res.json({ status: "error", response: error.message });
   }
 };
+
+
+export default {UserOTPRequest, UserOTPVerify, ProfileService, UpdateProfileService}
