@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "45483ff8-a671-4f77-9f82-31ea773d211c",
+		"name": "MERN Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27423329"
+	},
+	"item": [
+		{
+			"name": "otp_request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mdkamalhosennn@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/otp_request",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"otp_request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify_otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mdkamalhosennn@gmail.com\",\r\n    \"otp\": \"182481\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/verify_otp",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"verify_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBrandList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"description": "{{token}}",
+						"uuid": "b8515cb5-12df-4316-adb3-e81229ee0ad2"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"brandName\": \"Razer\",\r\n  \"brandImg\": \"https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/addBrandList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"addBrandList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBrandList",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"description": "{{token}}",
+						"uuid": "fbd129cf-af45-4311-9382-8a5b122bb2d0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/getBrandList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"getBrandList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCategoryList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"description": "{{token}}",
+						"uuid": "f72e8a5c-cf26-4b9c-93fd-4e3f26d0e6ef"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"categoryName\": \"Speaker\",\r\n  \"categoryImg\": \"https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/addCategoryList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"addCategoryList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCategoryList",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"description": "{{token}}",
+						"uuid": "73794cc5-d22a-48a6-8d83-2b4d1673de23"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/getCategoryList",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"getCategoryList"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3030/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1ka2FtYWxob3Nlbm5uQGdtYWlsLmNvbSIsImlhdCI6MTcxNDk5MDQ2MiwiZXhwIjoxNzE1MDc2ODYyfQ.QVdI7fFab_THl48QCFPxfAfFYmBM-iTqGdzqwyI4P8Q",
+			"type": "string"
+		}
+	]
+}

@@ -1,9 +1,11 @@
 import UserServices from "../services/UserServices.js";
 
-exports.UserOTP = async (req, res) => {
+const UserOTP = async (req, res) => {
   return await UserServices.UserOTPRequest(req, res);
 };
 
-exports.VerifyOTP = async (req, res) => {
+const VerifyOTP = async (req, res) => {
   return await UserServices.UserOTPVerify(req, res);
 };
+
+export default { UserOTP, VerifyOTP };

@@ -1,17 +1,26 @@
 // Importing required modules
-import express from 'express';
+import express from "express";
 import UserController from "../controllers/UserController.js";
+import ProductController from "../controllers/ProductController.js";
+import UserAuthorization from "../middlewares/Authorization.js";
 
 // Creating an Express router
 const router = express.Router();
 
-// Route to handle OTP request
 router.post("/otp_request", UserController.UserOTP);
+router.post("/verify_otp", UserController.VerifyOTP);
 
-// Route to handle GET request for checking status
-router.get("/ok", (req, res) => {
-    res.json({ status: 200, response: "OK" });
-});
+router.post("/addBrandList", UserAuthorization, ProductController.AddBrandList);
+router.get("/getBrandList", UserAuthorization, ProductController.ViewBrandList);
+router.post(
+  "/addCategoryList",
+  UserAuthorization,
+  ProductController.AddCategoryList
+);
+router.get(
+  "/getCategoryList",
+  UserAuthorization,
+  ProductController.ViewCategoryList
+);
 
-// Exporting the router as the default export
 export default router;
