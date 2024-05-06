@@ -27,7 +27,11 @@ app.use("/api/v1", apiRoutes);
 //Database connection
 
 mongoose
+<<<<<<< HEAD
   .connect("mongodb://localhost:27017/mern_ecommerce")
+=======
+  .connect(process.env.MONGOSTRING)
+>>>>>>> 77f5aa78faec91ea1331992324a20c6828b37c6c
   .then((res) => {
     console.log("Database connected");
   })
