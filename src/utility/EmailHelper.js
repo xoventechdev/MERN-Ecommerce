@@ -1,25 +1,22 @@
 import nodemailer from "nodemailer";
 
-export default SendEmail = async (receivedEmail, emailSubject, emailBody) => {
-  const transporter = nodemailer.createTransport({
+const SendEmail = async (EmailTo, EmailSubject, EmailText) => {
+  let transport = nodemailer.createTransport({
     host: "mail.teamrabbil.com",
     port: 25,
     secure: false,
-    auth: {
-      user: "info@teamrabbil.com",
-      pass: "~sR4[bhaC[Qs",
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
+    auth: { user: "info@teamrabbil.com", pass: "~sR4[bhaC[Qs" },
+    tls: { rejectUnauthorized: false },
   });
 
-  const mailOptions = {
-    from: "MERN Ecommerce <noreply@gmail.com>",
-    to: receivedEmail,
-    subject: emailSubject,
-    text: emailBody,
+  let mailOption = {
+    from: "MERN Ecommerce Solution <info@teamrabbil.com>",
+    to: EmailTo,
+    subject: EmailSubject,
+    text: EmailText,
   };
 
-  return await transporter.sendMail(mailOptions);
+  return await transport.sendMail(mailOption);
 };
+
+export default SendEmail;

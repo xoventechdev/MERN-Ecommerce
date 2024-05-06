@@ -1,20 +1,44 @@
 import SendEmail from "../utility/EmailHelper.js";
 import UserModel from "../models/UserModel.js";
+import TokenHelper from "../utility/TokenHelper.js";
 
 const UserOTPRequest = async (req, res) => {
   try {
     const { email } = req.body;
+    if (!email) {
+      return res.json({
+        status: "error",
+        response: "Email address is required",
+      });
+    }
+
     const otpGenerate = Math.floor(100000 + Math.random() * 900000);
     const emailSubject = "Email verification code";
-    const emailBody = `Your verification code is: ${otpGenerate} of ${email} for login to MERN Ecommerce website`;
-    await SendEmail(email, emailSubject, emailBody);
-    await UserModel.create({ email: email, otp: otpGenerate });
-    res.json({
+    const emailBody = `Your verification code is: ${otpGenerate} for login to MERN Ecommerce website`;
+
+    const otpGenerated = await SendEmail(email, emailSubject, emailBody);
+
+    if (!otpGenerated) {
+      return res.json({
+        status: "error",
+        response: "Failed to send OTP. Please try again later.",
+      });
+    }
+    await UserModel.updateOne(
+      { email: email },
+      { otp: otpGenerate },
+      { upsert: true }
+    );
+    return res.json({
       status: "success",
-      response: "OTP has been send to your email address",
+      response: "OTP has been sent to your email address.",
     });
   } catch (error) {
-    res.json({ status: "error", response: error.message });
+    console.error("Error in OTP request:", error);
+    return res.json({
+      status: "error",
+      response: "Something went wrong. Please try again later.",
+    });
   }
 };
 
@@ -23,8 +47,13 @@ const UserOTPVerify = async (req, res) => {
     const { email, otp } = req.body;
     const user = await UserModel.findOne({ email: email, otp: otp });
     if (user) {
-      const token = EncodeToken(email, user._id.toString);
+      const token = TokenHelper.EncodeToken(email, user._id.toString);
       await UserModel.updateOne({ email: email }, { $set: { otp: "" } });
+      const cookieExp = {
+        expires: new Date(Date.now() + 1 * 60 * 60 * 24),
+        httpOnly: false,
+      };
+      res.cookie("token", token, cookieExp);
       res.json({
         status: "success",
         response: "OTP verified successfully",
@@ -33,7 +62,8 @@ const UserOTPVerify = async (req, res) => {
     } else {
       res.json({
         status: "warning",
-        response: "OTP verification failed. Please try again.",
+        response:
+          "OTP verification failed. Check your OTP code and Please try again.",
       });
     }
   } catch (error) {
@@ -67,5 +97,9 @@ const UpdateProfileService = async (req, res) => {
   }
 };
 
-
-export default {UserOTPRequest, UserOTPVerify, ProfileService, UpdateProfileService}
+export default {
+  UserOTPRequest,
+  UserOTPVerify,
+  ProfileService,
+  UpdateProfileService,
+};

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = mongoose.Schema(
   {
     email: {
@@ -14,4 +15,6 @@ const userSchema = mongoose.Schema(
   { timestamps: true, versionKey: false }
 );
 
-export default UserModel = mongoose.model("users", userSchema);
+const UserModel = mongoose.model("users", userSchema);
+
+export default UserModel;
