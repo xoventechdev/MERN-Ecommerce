@@ -10,17 +10,9 @@ const router = express.Router();
 router.post("/otp_request", UserController.UserOTP);
 router.post("/verify_otp", UserController.VerifyOTP);
 
-router.post("/addBrandList", UserAuthorization, ProductController.AddBrandList);
-router.get("/getBrandList", UserAuthorization, ProductController.ViewBrandList);
-router.post(
-  "/addCategoryList",
-  UserAuthorization,
-  ProductController.AddCategoryList
-);
-router.get(
-  "/getCategoryList",
-  UserAuthorization,
-  ProductController.ViewCategoryList
-);
+router.post("/addBrandList", ProductController.AddBrandList);
+router.get("/getBrandList", ProductController.ViewBrandList);
+router.post("/addCategoryList", ProductController.AddCategoryList);
+router.get("/getCategoryList", ProductController.ViewCategoryList);
 
 export default router;
