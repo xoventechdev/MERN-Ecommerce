@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MasterComponent from "../Component/Shared/MasterComponent";
-import getBrandList from "../Utility/APIHelper";
+import { getBrandList } from "../Utility/APIHelper";
 import axios from "axios";
 
 const HomePage = () => {
@@ -14,8 +14,6 @@ const HomePage = () => {
     const data = await getBrandList();
     setCategory(data);
   };
-
-  console.log(Category);
 
   return (
     <MasterComponent>

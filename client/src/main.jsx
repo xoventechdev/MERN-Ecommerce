@@ -6,6 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 import "./assets/css/demo.css";
 import "./assets/css/core.css";
 import "./assets/css/theme-default.css";
+import "./assets/css/editor.css";
 import "./assets/css/datatables.bootstrap5.css";
 import "boxicons";
 
