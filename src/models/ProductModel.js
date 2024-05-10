@@ -23,14 +23,14 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
     stock: {
       type: Boolean,
       required: true,
       default: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
     },
     star: {
       type: String,
@@ -39,6 +39,10 @@ const productSchema = mongoose.Schema(
     remark: {
       type: String,
       required: true,
+    },
+    isPublished: {
+      type: Boolean,
+      default: true,
     },
     categoryID: {
       type: mongoose.Schema.Types.ObjectId,

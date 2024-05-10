@@ -29,7 +29,7 @@ const Header = () => {
           </div>
         </div>
         <ul className="navbar-nav flex-row align-items-center ms-auto">
-          {"{"}/* {/* Language */} */{"}"}
+          {/* Language */}
           <li className="nav-item dropdown-language dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
@@ -81,8 +81,8 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          {"{"}/* {/* /Language */} */{"}"}
-          {"{"}/* {/* Quick links  */} */{"}"}
+          {/* /Language */}
+          {/* Quick links  */}
           <li className="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
@@ -212,8 +212,8 @@ const Header = () => {
               </div>
             </div>
           </li>
-          {"{"}/* {/* Quick links */} */{"}"}
-          {"{"}/* {/* Style Switcher */} */{"}"}
+          {/* Quick links */}
+          {/* Style Switcher */}
           <li className="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
@@ -261,8 +261,8 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          {"{"}/* {/* / Style Switcher*/} */{"}"}
-          {"{"}/* {/* Notification */} */{"}"}
+          {/* / Style Switcher*/}
+          {/* Notification */}
           <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
             <a
               className="nav-link dropdown-toggle hide-arrow"
@@ -611,8 +611,8 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          {"{"}/* {/*/ Notification */} */{"}"}
-          {"{"}/* {/* User */} */{"}"}
+          {/*/ Notification */}
+          {/* User */}
           <li className="nav-item navbar-dropdown dropdown-user dropdown">
             <a
               className="nav-link dropdown-toggle hide-arrow"
@@ -712,10 +712,10 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          {"{"}/* {/*/ User */} */{"}"}
+          {/*/ User */}
         </ul>
       </div>
-      {"{"}/* {/* Search Small Screens */} */{"}"}
+      {/* Search Small Screens */}
       <div className="navbar-search-wrapper search-input-wrapper d-none">
         <input
           type="text"

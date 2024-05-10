@@ -16,18 +16,8 @@ const productDetailSchema = mongoose.Schema(
     },
     image4: {
       type: String,
-      required: true,
     },
     image5: {
-      type: String,
-    },
-    image6: {
-      type: String,
-    },
-    image7: {
-      type: String,
-    },
-    image8: {
       type: String,
     },
     des: {
