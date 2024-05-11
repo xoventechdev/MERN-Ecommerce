@@ -24,6 +24,10 @@ const ViewCategoryListByID = async (req, res) => {
   return await ProductServices.ViewCategoryListByID(req, res);
 };
 
+const AddProduct = async (req, res) => {
+  return await ProductServices.AddProduct(req, res);
+};
+
 export default {
   AddBrandList,
   ViewBrandList,
@@ -31,4 +35,5 @@ export default {
   AddCategoryList,
   ViewCategoryList,
   ViewCategoryListByID,
+  AddProduct,
 };

@@ -20,4 +20,13 @@ export const getCategoryList = async () => {
   }
 };
 
+export const addProductToServer = async (data) => {
+  try {
+    const res = await axios.post(`${BaseUrl}/addProduct`, data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // export default { getBrandList, getCategoryList };

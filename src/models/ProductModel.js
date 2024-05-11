@@ -21,7 +21,6 @@ const productSchema = mongoose.Schema(
     },
     discountPrice: {
       type: Number,
-      required: true,
     },
     stock: {
       type: Boolean,
@@ -34,7 +33,6 @@ const productSchema = mongoose.Schema(
     },
     star: {
       type: String,
-      required: true,
     },
     remark: {
       type: String,

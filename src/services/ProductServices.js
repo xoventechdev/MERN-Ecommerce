@@ -1,4 +1,5 @@
 import ProductModel from "../models/ProductModel.js";
+import ProductDetailModel from "../models/ProductDetailModel.js";
 import BrandModel from "../models/BrandModel.js";
 import CategoryModel from "../models/CategoryModel.js";
 
@@ -102,6 +103,120 @@ const ViewCategoryListByID = async (req, res) => {
   }
 };
 
+const AddProduct = async (req, res) => {
+  try {
+    const {
+      title,
+      shortDes,
+      des,
+      image1,
+      image2,
+      image3,
+      image4,
+      image5,
+      color,
+      size,
+      price,
+      discountPrice,
+      discount,
+      quantity,
+      stock,
+      brandID,
+      categoryID,
+      remark,
+      isPublished,
+    } = req.body;
+
+    if (
+      title === "" ||
+      shortDes === "" ||
+      des === "" ||
+      image1 === "" ||
+      image2 === "" ||
+      image3 === "" ||
+      color === "" ||
+      size === "" ||
+      price === "" ||
+      quantity === "" ||
+      remark === "" ||
+      isPublished === ""
+    ) {
+      return res.json({
+        status: "warning",
+        response: "Please, fill-up all required data.",
+      });
+    }
+
+    const isExits = await ProductModel.findOne({ title: title });
+    if (isExits) {
+      return res.json({
+        status: "warning",
+        response: `${title} already exists`,
+      });
+    }
+
+    const productAdded = await ProductModel.updateOne(
+      { title: title },
+      {
+        title: title,
+        shortDes: shortDes,
+        price: price,
+        discount: discount,
+        discountPrice: discountPrice,
+        stock: stock,
+        quantity: quantity,
+        remark: remark,
+        isPublished: isPublished,
+        categoryID: categoryID,
+        brandID: brandID,
+      },
+      { upsert: true }
+    );
+
+    if (!productAdded.acknowledged === true) {
+      return res.json({
+        status: "warning",
+        response: "Something went wrong. Try again for add product data.",
+      });
+    }
+    const product_ID = productAdded.upsertedId;
+    const productDetailAdded = await ProductDetailModel.updateOne(
+      { productID: product_ID },
+      {
+        image1: image1,
+        image2: image2,
+        image3: image3,
+        image4: image4,
+        image5: image5,
+        des: des,
+        color: color,
+        size: size,
+      },
+      { upsert: true }
+    );
+    if (productDetailAdded.acknowledged === true) {
+      if (productDetailAdded.modifiedCount > 0) {
+        return res.json({
+          status: "success",
+          response: `${title} updated successfully`,
+        });
+      } else if (productDetailAdded.upsertedCount > 0) {
+        return res.json({
+          status: "success",
+          response: `${title} added successfully`,
+        });
+      } else {
+        return res.json({
+          status: "warning",
+          response: "Something went wrong. Try again for add product data.",
+        });
+      }
+    }
+  } catch (error) {
+    res.json({ status: "error", response: error.message });
+  }
+};
+
 export default {
   AddBrandList,
   ViewBrandList,
@@ -109,4 +224,5 @@ export default {
   AddCategoryList,
   ViewCategoryList,
   ViewCategoryListByID,
+  AddProduct,
 };

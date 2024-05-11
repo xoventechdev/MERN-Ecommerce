@@ -33,7 +33,7 @@ const productDetailSchema = mongoose.Schema(
       required: true,
     },
     productID: {
-      type: mongoose.Schema.types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "products",
       required: true,
     },
@@ -43,8 +43,8 @@ const productDetailSchema = mongoose.Schema(
     versionKey: false,
   }
 );
-
-export default ProductDetailModel = mongoose.model(
+const ProductDetailModel = mongoose.model(
   "productDetails",
   productDetailSchema
 );
+export default ProductDetailModel;

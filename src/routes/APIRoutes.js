@@ -15,4 +15,6 @@ router.get("/getBrandList", ProductController.ViewBrandList);
 router.post("/addCategoryList", ProductController.AddCategoryList);
 router.get("/getCategoryList", ProductController.ViewCategoryList);
 
+router.post("/addProduct", ProductController.AddProduct);
+
 export default router;

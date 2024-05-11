@@ -1,10 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { getBrandList, getCategoryList } from "../Utility/APIHelper";
+import {
+  getBrandList,
+  getCategoryList,
+  addProductToServer,
+} from "../Utility/APIHelper";
+import { ToastContainer } from "react-toastify";
+import { ErrorDex, SuccessDex, InfoDex } from "../Utility/AdditionalServices";
 
 const ProductForm = () => {
   const [category, setCategory] = useState([]);
   const [brand, setBrand] = useState([]);
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState({
+    title: "",
+    shortDes: "",
+    des: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
+    image5: "",
+    color: "",
+    size: "",
+    price: "",
+    discountPrice: "",
+    discount: false,
+    quantity: 0,
+    stock: true,
+    brandID: "",
+    categoryID: "",
+    remark: "",
+    isPublished: true,
+  });
 
   useEffect(() => {
     getBrand();
@@ -24,14 +50,62 @@ const ProductForm = () => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
-  const savetoServer = (e) => {
+  const savetoServer = async (e) => {
     e.preventDefault();
-    console.log("product");
+
+    if (
+      product.title === "" ||
+      product.shortDes === "" ||
+      product.des === "" ||
+      product.image1 === "" ||
+      product.image2 === "" ||
+      product.image3 === "" ||
+      product.color === "" ||
+      product.size === "" ||
+      product.price === "" ||
+      product.quantity === "" ||
+      product.remark === "" ||
+      product.isPublished === ""
+    ) {
+      return ErrorDex("Please fill all the fields");
+    }
+
     console.log(product);
+    const data = await addProductToServer(product);
+
+    console.log(data);
+
+    if (data.status == "success") {
+      SuccessDex("Product Added Successfully");
+      setProduct({
+        title: "",
+        shortDes: "",
+        des: "",
+        image1: "",
+        image2: "",
+        image3: "",
+        image4: "",
+        image5: "",
+        color: "",
+        size: "",
+        price: "",
+        discountPrice: "",
+        discount: false,
+        quantity: 0,
+        stock: true,
+        brandID: "",
+        categoryID: "",
+        remark: "",
+        isPublished: true,
+      });
+    } else {
+      ErrorDex(data.response.message);
+    }
   };
 
   return (
     <div className="app-ecommerce">
+      <ToastContainer />
       {/* Add Product */}
       <form onSubmit={savetoServer}>
         <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -127,7 +201,6 @@ const ProductForm = () => {
                     placeholder="Product Image 1 (Required)"
                     name="image1"
                     aria-label="Product Image 1 (Required)"
-                    required
                     onChange={changeHandler}
                     value={product.image1}
                   />
@@ -137,7 +210,6 @@ const ProductForm = () => {
                     placeholder="Product Image 2 (Required)"
                     name="image2"
                     aria-label="Product Image 2 (Required)"
-                    required
                     onChange={changeHandler}
                     value={product.image2}
                   />
@@ -147,7 +219,6 @@ const ProductForm = () => {
                     placeholder="Product Image 3 (Required)"
                     name="image3"
                     aria-label="Product Image 3 (Required)"
-                    required
                     onChange={changeHandler}
                     value={product.image3}
                   />
@@ -204,7 +275,7 @@ const ProductForm = () => {
                           Not visible
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           name="color"
                           className="form-control"
                           placeholder="Enter Color"
@@ -212,7 +283,7 @@ const ProductForm = () => {
                           value={product.color}
                         />
                         <input
-                          type="number"
+                          type="text"
                           name="size"
                           className="form-control mt-3"
                           placeholder="Enter size"
