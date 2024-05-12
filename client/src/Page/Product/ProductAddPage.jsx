@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import MasterComponent from "../Component/Shared/MasterComponent";
-import ProductForm from "../Component/ProductForm";
+import MasterComponent from "../../Component/Shared/MasterComponent";
+import ProductForm from "../../Component/Product/ProductForm";
 
 const ProductAddPage = () => {
   return (

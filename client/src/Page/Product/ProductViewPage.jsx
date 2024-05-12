@@ -1,6 +1,6 @@
 import React from "react";
-import MasterComponent from "../Component/Shared/MasterComponent";
-import ProductList from "../Component/ProductList";
+import MasterComponent from "../../Component/Shared/MasterComponent";
+import ProductList from "../../Component/Product/ProductList";
 
 const ProductViewPage = () => {
   return (

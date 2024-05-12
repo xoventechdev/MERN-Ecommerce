@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import {
   getBrandList,
   getCategoryList,
   addProductToServer,
-} from "../Utility/APIHelper";
+} from "../../Utility/APIHelper";
 import { ToastContainer } from "react-toastify";
-import { ErrorDex, SuccessDex, InfoDex } from "../Utility/AdditionalServices";
+import {
+  ErrorDex,
+  SuccessDex,
+  InfoDex,
+} from "../../Utility/AdditionalServices";
+import RedStar from "../Shared/RedStar";
 
 const ProductForm = () => {
   const [category, setCategory] = useState([]);
@@ -50,8 +57,14 @@ const ProductForm = () => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
+  const editorHandler = (content) => {
+    setProduct({ ...product, des: content });
+  };
+
   const savetoServer = async (e) => {
     e.preventDefault();
+
+    console.log(product);
 
     if (
       product.title === "" ||
@@ -76,7 +89,6 @@ const ProductForm = () => {
     console.log(data);
 
     if (data.status == "success") {
-      SuccessDex("Product Added Successfully");
       setProduct({
         title: "",
         shortDes: "",
@@ -98,9 +110,35 @@ const ProductForm = () => {
         remark: "",
         isPublished: true,
       });
+      SuccessDex("Product Added Successfully");
     } else {
       ErrorDex(data.response.message);
     }
+  };
+
+  const discardBtn = (e) => {
+    e.preventDefault();
+    setProduct({
+      title: "",
+      shortDes: "",
+      des: "",
+      image1: "",
+      image2: "",
+      image3: "",
+      image4: "",
+      image5: "",
+      color: "",
+      size: "",
+      price: "",
+      discountPrice: "",
+      discount: false,
+      quantity: 0,
+      stock: true,
+      brandID: "",
+      categoryID: "",
+      remark: "",
+      isPublished: true,
+    });
   };
 
   return (
@@ -114,8 +152,9 @@ const ProductForm = () => {
             <p className="text-muted">Orders placed across your store</p>
           </div>
           <div className="d-flex align-content-center flex-wrap gap-3">
-            <button className="btn btn-label-secondary">Discard</button>
-            <button className="btn btn-label-primary">Save draft</button>
+            <button onClick={discardBtn} className="btn btn-label-secondary">
+              Discard
+            </button>
             <button type="submit" className="btn btn-primary">
               Publish product
             </button>
@@ -135,7 +174,7 @@ const ProductForm = () => {
                     className="form-label"
                     htmlFor="ecommerce-product-name"
                   >
-                    Product Title
+                    Product Title <RedStar />
                   </label>
                   <input
                     type="text"
@@ -149,7 +188,9 @@ const ProductForm = () => {
                 </div>
                 {/* Short Description */}
                 <div>
-                  <label className="form-label">Short Description</label>
+                  <label className="form-label">
+                    Short Description <RedStar />
+                  </label>
                   <div className="form-control p-0">
                     <textarea
                       className=" form-control w-100"
@@ -166,17 +207,16 @@ const ProductForm = () => {
                 {/* Description */}
 
                 <div>
-                  <label className="form-label">Description</label>
+                  <label className="form-label">
+                    Description <RedStar />
+                  </label>
                   <div className="form-control p-0">
-                    <textarea
-                      className=" form-control w-100"
+                    <ReactQuill
+                      className=" w-100"
                       name="des"
-                      rows={5}
-                      aria-label="Short Description"
-                      placeholder="Short Description"
-                      onChange={changeHandler}
+                      onChange={editorHandler}
                       value={product.des}
-                    ></textarea>
+                    ></ReactQuill>
                   </div>
                 </div>
               </div>
@@ -193,7 +233,7 @@ const ProductForm = () => {
                     className="form-label"
                     htmlFor="ecommerce-product-name"
                   >
-                    Product Image
+                    Product Image <RedStar />
                   </label>
                   <input
                     type="text"
@@ -261,10 +301,14 @@ const ProductForm = () => {
                           Options
                         </label>
                         <div className="position-relative">
-                          <p className="form-control">Color</p>
+                          <p className="form-control">
+                            Color <RedStar />
+                          </p>
                         </div>
                         <div className="position-relative">
-                          <p className="form-control">Size</p>
+                          <p className="form-control">
+                            Size <RedStar />
+                          </p>
                         </div>
                       </div>
                       <div className="mb-3 col-8">
@@ -313,7 +357,7 @@ const ProductForm = () => {
                     className="form-label"
                     htmlFor="ecommerce-product-price"
                   >
-                    Base Price
+                    Base Price <RedStar />
                   </label>
                   <input
                     type="number"
@@ -372,7 +416,7 @@ const ProductForm = () => {
                     className="form-label"
                     htmlFor="ecommerce-product-price"
                   >
-                    Quantity
+                    Quantity <RedStar />
                   </label>
                   <input
                     type="number"
@@ -393,7 +437,7 @@ const ProductForm = () => {
                         type="checkbox"
                         name="stock"
                         className="switch-input"
-                        defaultChecked=""
+                        defaultChecked="true"
                         onChange={changeHandler}
                         value={product.stock}
                       />
@@ -417,7 +461,7 @@ const ProductForm = () => {
                 {/* Vendor */}
                 <div className="mb-3 col ecommerce-select2-dropdown">
                   <label className="form-label mb-1" htmlFor="vendor">
-                    Brand
+                    Brand <RedStar />
                   </label>
                   <div className="position-relative">
                     <select
@@ -446,7 +490,9 @@ const ProductForm = () => {
                     className="form-label mb-1 d-flex justify-content-between align-items-center"
                     htmlFor="category-org"
                   >
-                    <span>Category</span>
+                    <span>
+                      Category <RedStar />
+                    </span>
                   </label>
                   <div className="position-relative">
                     <select
@@ -474,7 +520,7 @@ const ProductForm = () => {
                 {/* Remark */}
                 <div className="mb-3 col ecommerce-select2-dropdown">
                   <label className="form-label mb-1" htmlFor="Remark">
-                    Remark
+                    Remark <RedStar />
                   </label>
                   <div className="position-relative">
                     <select

@@ -1,6 +1,6 @@
 import React from "react";
-import MasterComponent from "../Component/Shared/MasterComponent";
-import BrandList from "../Component/BrandList";
+import MasterComponent from "../../Component/Shared/MasterComponent";
+import BrandList from "../../Component/Brand/BrandList";
 
 const BrandViewPage = () => {
   return (

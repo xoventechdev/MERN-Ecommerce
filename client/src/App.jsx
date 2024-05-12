@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Page/HomePage";
-import BrandViewPage from "./Page/BrandViewPage";
-import BrandAddPage from "./Page/BrandAddPage";
-import BrandUpdatePage from "./Page/BrandUpdatePage";
-import CategoryViewPage from "./Page/CategoryViewPage";
-import CategoryAddPage from "./Page/CategoryAddPage";
-import CategoryUpdatePage from "./Page/CategoryUpdatePage";
-import ProductViewPage from "./Page/ProductViewPage";
-import ProductAddPage from "./Page/ProductAddPage";
-import ProductUpdatePage from "./Page/ProductUpdatePage";
+import BrandViewPage from "./Page/Brand/BrandViewPage";
+import BrandAddPage from "./Page/Brand/BrandAddPage";
+import BrandUpdatePage from "./Page/Brand/BrandUpdatePage";
+import CategoryViewPage from "./Page/Category/CategoryViewPage";
+import CategoryAddPage from "./Page/Category/CategoryAddPage";
+import CategoryUpdatePage from "./Page/Category/CategoryUpdatePage";
+import ProductViewPage from "./Page/Product/ProductViewPage";
+import ProductAddPage from "./Page/Product/ProductAddPage";
+import ProductUpdatePage from "./Page/Product/ProductUpdatePage";
 
 function App() {
   return (

@@ -10,7 +10,6 @@ import "./assets/css/editor.css";
 import "./assets/css/datatables.bootstrap5.css";
 import "boxicons";
 import "react-toastify/dist/ReactToastify.css";
-// import "./assets/js/datatables-bootstrap5.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

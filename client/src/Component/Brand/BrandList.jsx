@@ -1,6 +1,6 @@
 import React from "react";
 
-import BrandAdd from "../Component/BrandAdd";
+import BrandAdd from "../Brand/BrandAdd";
 
 const BrandList = () => {
   return (
