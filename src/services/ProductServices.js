@@ -2,11 +2,14 @@ import ProductModel from "../models/ProductModel.js";
 import ProductDetailModel from "../models/ProductDetailModel.js";
 import BrandModel from "../models/BrandModel.js";
 import CategoryModel from "../models/CategoryModel.js";
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const AddBrandList = async (req, res) => {
   try {
     const { brandName, brandImg } = req.body;
-    if (brandName == null || brandImg == null) {
+    if (brandName == null && brandImg == null) {
       res.json({
         status: "warning",
         response: "Brand name and brand image are required",
@@ -55,7 +58,7 @@ const ViewBrandListByID = async (req, res) => {
 const AddCategoryList = async (req, res) => {
   try {
     const { categoryName, categoryImg } = req.body;
-    if (categoryName == null || categoryImg == null) {
+    if (categoryName == null && categoryImg == null) {
       res.json({
         status: "warning",
         response: "Category name and category image are required",
@@ -128,17 +131,17 @@ const AddProduct = async (req, res) => {
     } = req.body;
 
     if (
-      title === "" ||
-      shortDes === "" ||
-      des === "" ||
-      image1 === "" ||
-      image2 === "" ||
-      image3 === "" ||
-      color === "" ||
-      size === "" ||
-      price === "" ||
-      quantity === "" ||
-      remark === "" ||
+      title === "" &&
+      shortDes === "" &&
+      des === "" &&
+      image1 === "" &&
+      image2 === "" &&
+      image3 === "" &&
+      color === "" &&
+      size === "" &&
+      price === "" &&
+      quantity === "" &&
+      remark === "" &&
       isPublished === ""
     ) {
       return res.json({
@@ -198,12 +201,12 @@ const AddProduct = async (req, res) => {
       if (productDetailAdded.modifiedCount > 0) {
         return res.json({
           status: "success",
-          response: `${title} updated successfully`,
+          response: `Product updated successfully`,
         });
       } else if (productDetailAdded.upsertedCount > 0) {
         return res.json({
           status: "success",
-          response: `${title} added successfully`,
+          response: `Product added successfully`,
         });
       } else {
         return res.json({
@@ -217,6 +220,108 @@ const AddProduct = async (req, res) => {
   }
 };
 
+const ViewProductList = async (req, res) => {
+  try {
+    const product = await ProductModel.aggregate([
+      {
+        $lookup: {
+          from: "productdetails",
+          localField: "_id",
+          foreignField: "productID",
+          as: "details",
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "categoryID",
+          foreignField: "_id",
+          as: "categories",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          price: 1,
+          isPublished: 1,
+          quantity: 1,
+          stock: 1,
+          image: { $arrayElemAt: ["$details.image1", 0] },
+          category: { $arrayElemAt: ["$categories.categoryName", 0] },
+        },
+      },
+    ]);
+
+    return res.json({ status: "success", response: product });
+  } catch (error) {
+    res.json({ status: "error", response: error.message });
+  }
+};
+
+const ViewProductForEdit = async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+    const product = await ProductModel.aggregate([
+      {
+        $match: { _id: id },
+      },
+      {
+        $lookup: {
+          from: "productdetails",
+          localField: "_id",
+          foreignField: "productID",
+          as: "details",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          title: 1,
+          shortDes: 1,
+          des: { $arrayElemAt: ["$details.des", 0] },
+          image1: { $arrayElemAt: ["$details.image1", 0] },
+          image2: { $arrayElemAt: ["$details.image2", 0] },
+          image3: { $arrayElemAt: ["$details.image3", 0] },
+          image4: { $arrayElemAt: ["$details.image4", 0] },
+          image5: { $arrayElemAt: ["$details.image5", 0] },
+          color: { $arrayElemAt: ["$details.color", 0] },
+          size: { $arrayElemAt: ["$details.size", 0] },
+          price: 1,
+          discountPrice: 1,
+          discount: 1,
+          quantity: 1,
+          stock: 1,
+          brandID: 1,
+          categoryID: 1,
+          remark: 1,
+          isPublished: 1,
+        },
+      },
+    ]);
+
+    if (!product.length > 0) {
+      return res.json({ status: "warning", response: "Product not found" });
+    }
+    res.json({ status: "success", response: product });
+  } catch (error) {
+    res.json({ status: "error", response: error.message });
+  }
+};
+
+const DeleteProduct = async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+
+    console.log(id);
+    await ProductModel.Delete({ _id: id });
+    await ProductDetailModel.Delete({ productID: id });
+    res.json({ status: "success", response: "Product deleted successfully" });
+  } catch (error) {
+    res.json({ status: "error", response: error.message });
+  }
+};
+
 export default {
   AddBrandList,
   ViewBrandList,
@@ -225,4 +330,7 @@ export default {
   ViewCategoryList,
   ViewCategoryListByID,
   AddProduct,
+  ViewProductList,
+  ViewProductForEdit,
+  DeleteProduct,
 };

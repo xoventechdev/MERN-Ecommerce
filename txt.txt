@@ -1,0 +1,16 @@
+{
+    "_id": "66408c975c88130effb8fe39",
+    "title": "Acer Predator Helios 300 PH315-55-73Q1",
+    "brandID": "6638bc9706046fa9af113dae",
+    "categoryID": "6638c18106046fa9af1140da",
+    "createdAt": "2024-05-12T09:32:07.857Z",
+    "discount": false,
+    "discountPrice": 3500,
+    "isPublished": true,
+    "price": 4699,
+    "quantity": 7,
+    "remark": "new",
+    "shortDes": "Acer Predator Helios 300 PH315-55-73Q1 Gaming Notebook, 15.6\" LCD 165 Hz QHD Display, Intel Core i7-12700H, 32GB RAM, 1TB SSD, GeForce RTX 3080 8GB, RGB Backlight KB, Windows 11, Black\n",
+    "stock": true,
+    "updatedAt": "2024-05-12T09:32:07.857Z"
+}

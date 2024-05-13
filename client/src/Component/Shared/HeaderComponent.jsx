@@ -19,7 +19,7 @@ const Header = () => {
           <div className="nav-item navbar-search-wrapper mb-0">
             <a
               className="nav-item nav-link search-toggler px-0"
-              href="javascript:void(0);"
+             
             >
               <i className="bx bx-search bx-sm" />
               <span className="d-none d-md-inline-block text-muted">
@@ -33,7 +33,7 @@ const Header = () => {
           <li className="nav-item dropdown-language dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+             
               data-bs-toggle="dropdown"
             >
               <i className="bx bx-globe bx-sm" />
@@ -42,7 +42,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item active"
-                  href="javascript:void(0);"
+                 
                   data-language="en"
                   data-text-direction="ltr"
                 >
@@ -52,7 +52,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-language="fr"
                   data-text-direction="ltr"
                 >
@@ -62,7 +62,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-language="ar"
                   data-text-direction="rtl"
                 >
@@ -72,7 +72,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-language="de"
                   data-text-direction="ltr"
                 >
@@ -86,7 +86,7 @@ const Header = () => {
           <li className="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+             
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
@@ -217,7 +217,7 @@ const Header = () => {
           <li className="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+             
               data-bs-toggle="dropdown"
             >
               <i className="bx bx-sm bx-sun" />
@@ -226,7 +226,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-theme="light"
                 >
                   <span className="align-middle">
@@ -238,7 +238,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-theme="dark"
                 >
                   <span className="align-middle">
@@ -250,7 +250,7 @@ const Header = () => {
               <li>
                 <a
                   className="dropdown-item"
-                  href="javascript:void(0);"
+                 
                   data-theme="system"
                 >
                   <span className="align-middle">
@@ -266,7 +266,7 @@ const Header = () => {
           <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+             
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
@@ -616,7 +616,7 @@ const Header = () => {
           <li className="nav-item navbar-dropdown dropdown-user dropdown">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+             
               data-bs-toggle="dropdown"
             >
               <div className="avatar avatar-online">

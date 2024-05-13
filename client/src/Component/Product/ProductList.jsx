@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "datatables.net-bs5";
+import { getProductList, deleteProduct } from "../../Utility/APIHelper";
+import { Link } from "react-router-dom";
+import { ErrorDex, SuccessDex } from "../../Utility/AdditionalServices";
 
 const ProductList = () => {
+  const [product, setProduct] = useState([]);
+  const [isDelete, setDelete] = useState(false);
+
+  useEffect(() => {
+    getProduct();
+  }, [isDelete]);
+
+  const getProduct = async () => {
+    const data = await getProductList();
+    setProduct(data.response);
+  };
+
+  const DeleteProduct = async (id) => {
+    const res = await deleteProduct(id);
+    if (res.status == "success") {
+      SuccessDex(res.response);
+      setDelete(!isDelete);
+    } else {
+      ErrorDex(res.response);
+    }
+  };
+
   return (
     <div className="card">
       <div className="card-header">
@@ -180,19 +205,7 @@ const ProductList = () => {
                 >
                   stock
                 </th>
-                <th
-                  aria-controls="DataTables_Table_0"
-                  aria-label="sku: activate to sort column ascending"
-                  className="sorting"
-                  colSpan="1"
-                  rowSpan="1"
-                  style={{
-                    width: "51px",
-                  }}
-                  tabIndex="0"
-                >
-                  sku
-                </th>
+
                 <th
                   aria-controls="DataTables_Table_0"
                   aria-label="price: activate to sort column ascending"
@@ -247,98 +260,106 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="odd">
-                <td
-                  className="  control"
-                  style={{
-                    display: "none",
-                  }}
-                  tabIndex="0"
-                />
-                <td className="  dt-checkboxes-cell">
-                  <input
-                    className="dt-checkboxes form-check-input"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="">
-                  <div className="d-flex justify-content-start align-items-center product-name">
-                    <div className="avatar-wrapper">
-                      <div className="avatar avatar me-2 rounded-2 bg-label-secondary">
-                        <img
-                          alt="Product-96"
-                          className="rounded-2"
-                          src="../../assets/img/ecommerce-images/product-9.png"
-                        />
-                      </div>
-                    </div>
-                    <div className="d-flex flex-column">
-                      <h6 className="text-body text-nowrap mb-0">Rixflex</h6>
-                      <small className="text-muted text-truncate d-none d-sm-block">
-                        Cormier-Leuschke
-                      </small>
-                    </div>
-                  </div>
-                </td>
-                <td className="">
-                  <span className="text-truncate d-flex align-items-center">
-                    <span className="avatar-sm rounded-circle d-flex justify-content-center align-items-center bg-label-success me-2">
-                      <i className="bx bx-briefcase" />
-                    </span>
-                    Office
-                  </span>
-                </td>
-                <td>
-                  <span className="text-truncate">
-                    <label className="switch switch-primary switch-sm">
+              {product.map((item) => {
+                return (
+                  <tr key={item._id} className="odd">
+                    <td
+                      className="  control"
+                      style={{
+                        display: "none",
+                      }}
+                      tabIndex="0"
+                    />
+                    <td className="  dt-checkboxes-cell">
                       <input
-                        className="switch-input"
-                        id="switch"
+                        className="dt-checkboxes form-check-input"
                         type="checkbox"
                       />
-                      <span className="switch-toggle-slider">
-                        <span className="switch-off" />
+                    </td>
+                    <td className="">
+                      <div className="d-flex justify-content-start align-items-center product-name">
+                        <div className="avatar-wrapper">
+                          <div className="avatar avatar me-2 rounded-2 bg-label-secondary">
+                            <img
+                              alt="Product-96"
+                              className="rounded-2"
+                              src={item.image}
+                            />
+                          </div>
+                        </div>
+                        <div className="d-flex flex-column">
+                          <h6 className="text-body text-nowrap mb-0">
+                            {item.title}
+                          </h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="">
+                      <span className="text-truncate d-flex align-items-center">
+                        <span className="avatar-sm rounded-circle d-flex justify-content-center align-items-center bg-label-success me-2">
+                          <i className="bx bx-briefcase" />
+                        </span>
+                        {item.category}
                       </span>
-                    </label>
-                    <span className="d-none">Out_of_Stock</span>
-                  </span>
-                </td>
-                <td className="">
-                  <span>37038</span>
-                </td>
-                <td className="">
-                  <span>$871.09</span>
-                </td>
-                <td className="">
-                  <span>235</span>
-                </td>
-                <td className="sorting_1">
-                  <span className="badge bg-label-success" text-capitalized="">
-                    Publish
-                  </span>
-                </td>
-                <td>
-                  <div className="d-inline-block text-nowrap">
-                    <button className="btn btn-sm btn-icon">
-                      <i className="bx bx-edit" />
-                    </button>
-                    <button
-                      className="btn btn-sm btn-icon dropdown-toggle hide-arrow"
-                      data-bs-toggle="dropdown"
-                    >
-                      <i className="bx bx-dots-vertical-rounded me-2" />
-                    </button>
-                    <div className="dropdown-menu dropdown-menu-end m-0">
-                      <a className="dropdown-item" href="javascript:0;">
-                        View
-                      </a>
-                      <a className="dropdown-item" href="javascript:0;">
-                        Suspend
-                      </a>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+                    </td>
+                    <td>
+                      <span className="text-truncate">
+                        <label className="switch switch-primary switch-sm">
+                          <input
+                            type="checkbox"
+                            name="stock"
+                            className="switch-input"
+                            value={item.stock}
+                            checked={item.stock}
+                          />
+                          <span className="switch-toggle-slider">
+                            <span className="switch-on">
+                              <span className="switch-off" />
+                            </span>
+                          </span>
+                        </label>
+                        <span className="d-none">Out_of_Stock</span>
+                      </span>
+                    </td>
+                    <td className="">
+                      <span>৳ {item.price}</span>
+                    </td>
+                    <td className="">
+                      <span>{item.quantity}</span>
+                    </td>
+                    <td className="sorting_1">
+                      <span
+                        className="badge bg-label-success"
+                        text-capitalized=""
+                      >
+                        {item.isPublished ? "published" : "Unpublished"}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="d-inline-block text-nowrap">
+                        <Link
+                          to={`/product/${item._id}`}
+                          className="btn btn-sm btn-icon"
+                        >
+                          <i className="bx bx-trending-up" />
+                        </Link>
+                        <Link
+                          to={`/product-update/${item._id}`}
+                          className="btn btn-sm btn-icon"
+                        >
+                          <i className="bx bx-edit" />
+                        </Link>
+                        <button
+                          onClick={() => DeleteProduct(item._id)}
+                          className="btn btn-sm btn-icon"
+                        >
+                          <i className="bx bx-trash" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           <div className="row mx-2">

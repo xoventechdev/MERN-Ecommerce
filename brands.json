@@ -1,0 +1,72 @@
+[
+  {
+    "_id": "6638bba106046fa9af113ce9",
+    "brandName": "Dell",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:14:41.697Z",
+    "updatedAt": "2024-05-06T11:14:41.697Z"
+  },
+  {
+    "_id": "6638bc1606046fa9af113d39",
+    "brandName": "Microsoft",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:16:38.381Z",
+    "updatedAt": "2024-05-06T11:16:38.381Z"
+  },
+  {
+    "_id": "6638bc5906046fa9af113d79",
+    "brandName": "MSI",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:17:45.545Z",
+    "updatedAt": "2024-05-06T11:17:45.545Z"
+  },
+  {
+    "_id": "6638bc6606046fa9af113d85",
+    "brandName": "Apple",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:17:58.900Z",
+    "updatedAt": "2024-05-06T11:17:58.900Z"
+  },
+  {
+    "_id": "6638bc7306046fa9af113d90",
+    "brandName": "HP",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:18:11.022Z",
+    "updatedAt": "2024-05-06T11:18:11.022Z"
+  },
+  {
+    "_id": "6638bc8006046fa9af113d99",
+    "brandName": "Asus",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:18:24.728Z",
+    "updatedAt": "2024-05-06T11:18:24.728Z"
+  },
+  {
+    "_id": "6638bc8b06046fa9af113da3",
+    "brandName": "Samsung",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:18:35.647Z",
+    "updatedAt": "2024-05-06T11:18:35.647Z"
+  },
+  {
+    "_id": "6638bc9706046fa9af113dae",
+    "brandName": "Acer",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:18:47.345Z",
+    "updatedAt": "2024-05-06T11:18:47.345Z"
+  },
+  {
+    "_id": "6638bca506046fa9af113dba",
+    "brandName": "Lenovo",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:19:01.219Z",
+    "updatedAt": "2024-05-06T11:19:01.219Z"
+  },
+  {
+    "_id": "6638bcb506046fa9af113dc6",
+    "brandName": "Razer",
+    "brandImg": "https://photo.teamrabbil.com/images/2023/08/15/Phones--Tablets-01-3944.png",
+    "createdAt": "2024-05-06T11:19:17.294Z",
+    "updatedAt": "2024-05-06T11:19:17.294Z"
+  }
+]

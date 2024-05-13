@@ -29,4 +29,31 @@ export const addProductToServer = async (data) => {
   }
 };
 
+export const getProductList = async () => {
+  try {
+    const res = await axios.get(`${BaseUrl}/getProductList`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getProductForEdit = async (id) => {
+  try {
+    const res = await axios.get(`${BaseUrl}/productForEdit/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteProduct = async (id) => {
+  try {
+    const res = await axios.delete(`${BaseUrl}/productDelete/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // export default { getBrandList, getCategoryList };

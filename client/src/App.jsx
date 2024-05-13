@@ -18,7 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/product" element={<ProductViewPage />} />
         <Route path="/product-add" element={<ProductAddPage />} />
-        <Route path="/product-update" element={<ProductUpdatePage />} />
+        <Route path="/product-update/:id" element={<ProductUpdatePage />} />
         <Route path="/brand" element={<BrandViewPage />} />
         <Route path="/brand-add" element={<BrandAddPage />} />
         <Route path="/brand-update" element={<BrandUpdatePage />} />

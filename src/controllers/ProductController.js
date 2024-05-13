@@ -28,6 +28,17 @@ const AddProduct = async (req, res) => {
   return await ProductServices.AddProduct(req, res);
 };
 
+const ViewProductList = async (req, res) => {
+  return await ProductServices.ViewProductList(req, res);
+};
+
+const ViewProductForEdit = async (req, res) => {
+  return await ProductServices.ViewProductForEdit(req, res);
+};
+
+const DeleteProduct = async (req, res) => {
+  return await ProductServices.DeleteProduct(req, res);
+};
 export default {
   AddBrandList,
   ViewBrandList,
@@ -36,4 +47,7 @@ export default {
   ViewCategoryList,
   ViewCategoryListByID,
   AddProduct,
+  ViewProductList,
+  ViewProductForEdit,
+  DeleteProduct,
 };

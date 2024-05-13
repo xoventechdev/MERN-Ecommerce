@@ -5,6 +5,7 @@ import {
   getBrandList,
   getCategoryList,
   addProductToServer,
+  getProductForEdit,
 } from "../../Utility/APIHelper";
 import { ToastContainer } from "react-toastify";
 import {
@@ -13,8 +14,13 @@ import {
   InfoDex,
 } from "../../Utility/AdditionalServices";
 import RedStar from "../Shared/RedStar";
+import HeaderProductAdd from "./HeaderProductAdd";
+import { useParams } from "react-router-dom";
+import HeaderProductUpdate from "./HeaderProductUpdate";
 
 const ProductForm = () => {
+  const { id } = useParams();
+
   const [category, setCategory] = useState([]);
   const [brand, setBrand] = useState([]);
   const [product, setProduct] = useState({
@@ -35,14 +41,18 @@ const ProductForm = () => {
     stock: true,
     brandID: "",
     categoryID: "",
-    remark: "",
+    remark: "new",
     isPublished: true,
   });
 
   useEffect(() => {
+    if (id) {
+      getProduct();
+    }
     getBrand();
     getCategory();
   }, []);
+
   const getBrand = async () => {
     const data = await getBrandList();
     setBrand(data.response);
@@ -53,12 +63,17 @@ const ProductForm = () => {
     setCategory(data.response);
   };
 
-  const changeHandler = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+  const getProduct = async () => {
+    const data = await getProductForEdit(id);
+    setProduct(data.response[0]);
   };
 
   const editorHandler = (content) => {
-    setProduct({ ...product, des: content });
+    setProduct({ des: content });
+  };
+
+  const changeHandler = (e) => {
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
   const savetoServer = async (e) => {
@@ -83,10 +98,7 @@ const ProductForm = () => {
       return ErrorDex("Please fill all the fields");
     }
 
-    console.log(product);
     const data = await addProductToServer(product);
-
-    console.log(data);
 
     if (data.status == "success") {
       setProduct({
@@ -110,7 +122,7 @@ const ProductForm = () => {
         remark: "",
         isPublished: true,
       });
-      SuccessDex("Product Added Successfully");
+      SuccessDex(data.response);
     } else {
       ErrorDex(data.response.message);
     }
@@ -144,22 +156,14 @@ const ProductForm = () => {
   return (
     <div className="app-ecommerce">
       <ToastContainer />
-      {/* Add Product */}
+      {/* Product */}
       <form onSubmit={savetoServer}>
-        <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-          <div className="d-flex flex-column justify-content-center">
-            <h4 className="mb-1 mt-3">Add a new Product</h4>
-            <p className="text-muted">Orders placed across your store</p>
-          </div>
-          <div className="d-flex align-content-center flex-wrap gap-3">
-            <button onClick={discardBtn} className="btn btn-label-secondary">
-              Discard
-            </button>
-            <button type="submit" className="btn btn-primary">
-              Publish product
-            </button>
-          </div>
-        </div>
+        {id === undefined ? (
+          <HeaderProductAdd discardBtn={discardBtn} />
+        ) : (
+          <HeaderProductUpdate />
+        )}
+
         <div className="row">
           {/* First column*/}
           <div className="col-12 col-lg-8">

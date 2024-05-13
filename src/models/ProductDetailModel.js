@@ -34,7 +34,6 @@ const productDetailSchema = mongoose.Schema(
     },
     productID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "products",
       required: true,
     },
   },
@@ -43,6 +42,7 @@ const productDetailSchema = mongoose.Schema(
     versionKey: false,
   }
 );
+
 const ProductDetailModel = mongoose.model(
   "productDetails",
   productDetailSchema
