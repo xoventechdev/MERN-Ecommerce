@@ -28,6 +28,10 @@ const AddProduct = async (req, res) => {
   return await ProductServices.AddProduct(req, res);
 };
 
+const UpdateProduct = async (req, res) => {
+  return await ProductServices.UpdateProduct(req, res);
+};
+
 const ViewProductList = async (req, res) => {
   return await ProductServices.ViewProductList(req, res);
 };
@@ -47,6 +51,7 @@ export default {
   ViewCategoryList,
   ViewCategoryListByID,
   AddProduct,
+  UpdateProduct,
   ViewProductList,
   ViewProductForEdit,
   DeleteProduct,

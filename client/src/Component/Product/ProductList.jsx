@@ -7,6 +7,7 @@ import { ErrorDex, SuccessDex } from "../../Utility/AdditionalServices";
 const ProductList = () => {
   const [product, setProduct] = useState([]);
   const [isDelete, setDelete] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getProduct();
@@ -18,12 +19,46 @@ const ProductList = () => {
   };
 
   const DeleteProduct = async (id) => {
+    console.log(id);
     const res = await deleteProduct(id);
+    console.log(res);
     if (res.status == "success") {
       SuccessDex(res.response);
       setDelete(!isDelete);
     } else {
       ErrorDex(res.response);
+    }
+  };
+
+  const filteredProduct = product.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortDirection, setSortDirection] = useState("asc");
+
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedProduct = filteredProduct.sort((a, b) => {
+    if (sortDirection === "asc") {
+      return a[sortColumn] < b[sortColumn] ? -1 : 1;
+    } else {
+      return a[sortColumn] > b[sortColumn] ? -1 : 1;
+    }
+  });
+
+  const getHeaderClassName = (column) => {
+    if (sortColumn === column) {
+      return `sorting sorting_${sortDirection}`;
+    } else {
+      return "sorting";
     }
   };
 
@@ -77,6 +112,10 @@ const ProductList = () => {
                     className="form-control"
                     placeholder="Search Product"
                     type="search"
+                    value={searchTerm}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                    }}
                   />
                 </label>
               </div>
@@ -147,31 +186,10 @@ const ProductList = () => {
             <thead>
               <tr>
                 <th
-                  aria-label=""
-                  className="control sorting_disabled dtr-hidden"
-                  colSpan="1"
-                  rowSpan="1"
-                  style={{
-                    display: "none",
-                    width: "0px",
-                  }}
-                />
-                <th
-                  aria-label=""
-                  className="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all"
-                  colSpan="1"
-                  data-col="1"
-                  rowSpan="1"
-                  style={{
-                    width: "18px",
-                  }}
-                >
-                  <input className="form-check-input" type="checkbox" />
-                </th>
-                <th
+                  onClick={() => handleSort("title")}
+                  className={getHeaderClassName("title")}
                   aria-controls="DataTables_Table_0"
                   aria-label="product: activate to sort column ascending"
-                  className="sorting"
                   colSpan="1"
                   rowSpan="1"
                   style={{
@@ -182,9 +200,10 @@ const ProductList = () => {
                   product
                 </th>
                 <th
+                  onClick={() => handleSort("category")}
+                  className={getHeaderClassName("category")}
                   aria-controls="DataTables_Table_0"
                   aria-label="category: activate to sort column ascending"
-                  className="sorting"
                   colSpan="1"
                   rowSpan="1"
                   style={{
@@ -195,10 +214,12 @@ const ProductList = () => {
                   category
                 </th>
                 <th
-                  aria-label="stock"
-                  className="sorting_disabled"
+                  onClick={() => handleSort("stock")}
+                  className={getHeaderClassName("stock")}
+                  aria-controls="DataTables_Table_0"
                   colSpan="1"
                   rowSpan="1"
+                  aria-label="stock"
                   style={{
                     width: "60px",
                   }}
@@ -207,9 +228,10 @@ const ProductList = () => {
                 </th>
 
                 <th
+                  onClick={() => handleSort("price")}
+                  className={getHeaderClassName("price")}
                   aria-controls="DataTables_Table_0"
                   aria-label="price: activate to sort column ascending"
-                  className="sorting"
                   colSpan="1"
                   rowSpan="1"
                   style={{
@@ -220,9 +242,10 @@ const ProductList = () => {
                   price
                 </th>
                 <th
+                  onClick={() => handleSort("quantity")}
+                  className={getHeaderClassName("quantity")}
                   aria-controls="DataTables_Table_0"
                   aria-label="qty: activate to sort column ascending"
-                  className="sorting"
                   colSpan="1"
                   rowSpan="1"
                   style={{
@@ -233,10 +256,11 @@ const ProductList = () => {
                   qty
                 </th>
                 <th
+                  onClick={() => handleSort("isPublished")}
+                  className={getHeaderClassName("isPublished")}
                   aria-controls="DataTables_Table_0"
                   aria-label="status: activate to sort column ascending"
                   aria-sort="descending"
-                  className="sorting sorting_desc"
                   colSpan="1"
                   rowSpan="1"
                   style={{
@@ -260,22 +284,9 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody>
-              {product.map((item) => {
+              {filteredProduct.map((item) => {
                 return (
                   <tr key={item._id} className="odd">
-                    <td
-                      className="  control"
-                      style={{
-                        display: "none",
-                      }}
-                      tabIndex="0"
-                    />
-                    <td className="  dt-checkboxes-cell">
-                      <input
-                        className="dt-checkboxes form-check-input"
-                        type="checkbox"
-                      />
-                    </td>
                     <td className="">
                       <div className="d-flex justify-content-start align-items-center product-name">
                         <div className="avatar-wrapper">

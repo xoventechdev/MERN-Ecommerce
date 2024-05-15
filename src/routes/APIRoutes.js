@@ -19,5 +19,6 @@ router.post("/addProduct", ProductController.AddProduct);
 router.get("/getProductList", ProductController.ViewProductList);
 router.get("/productForEdit/:id", ProductController.ViewProductForEdit);
 router.delete("/productDelete/:id", ProductController.DeleteProduct);
+router.post("/updateProduct/:id", ProductController.UpdateProduct);
 
 export default router;

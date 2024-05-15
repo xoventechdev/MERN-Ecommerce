@@ -6,6 +6,7 @@ import {
   getCategoryList,
   addProductToServer,
   getProductForEdit,
+  updateProductToServer,
 } from "../../Utility/APIHelper";
 import { ToastContainer } from "react-toastify";
 import {
@@ -18,7 +19,7 @@ import HeaderProductAdd from "./HeaderProductAdd";
 import { useParams } from "react-router-dom";
 import HeaderProductUpdate from "./HeaderProductUpdate";
 
-const ProductForm = () => {
+const ProductForm = ({ isUpdate }) => {
   const { id } = useParams();
 
   const [category, setCategory] = useState([]);
@@ -46,7 +47,7 @@ const ProductForm = () => {
   });
 
   useEffect(() => {
-    if (id) {
+    if (isUpdate) {
       getProduct();
     }
     getBrand();
@@ -69,7 +70,7 @@ const ProductForm = () => {
   };
 
   const editorHandler = (content) => {
-    setProduct({ des: content });
+    product.des = content;
   };
 
   const changeHandler = (e) => {
@@ -98,33 +99,45 @@ const ProductForm = () => {
       return ErrorDex("Please fill all the fields");
     }
 
-    const data = await addProductToServer(product);
-
-    if (data.status == "success") {
-      setProduct({
-        title: "",
-        shortDes: "",
-        des: "",
-        image1: "",
-        image2: "",
-        image3: "",
-        image4: "",
-        image5: "",
-        color: "",
-        size: "",
-        price: "",
-        discountPrice: "",
-        discount: false,
-        quantity: 0,
-        stock: true,
-        brandID: "",
-        categoryID: "",
-        remark: "",
-        isPublished: true,
-      });
-      SuccessDex(data.response);
+    if (isUpdate) {
+      console.log("Update");
+      const data = await updateProductToServer(id, product);
+      console.log(data);
+      if (data.status == "success") {
+        SuccessDex(data.response);
+      } else {
+        ErrorDex(data.response);
+      }
     } else {
-      ErrorDex(data.response.message);
+      console.log("new");
+      const data = await addProductToServer(product);
+      console.log(data);
+      if (data.status == "success") {
+        setProduct({
+          title: "",
+          shortDes: "",
+          des: "",
+          image1: "",
+          image2: "",
+          image3: "",
+          image4: "",
+          image5: "",
+          color: "",
+          size: "",
+          price: "",
+          discountPrice: "",
+          discount: false,
+          quantity: 0,
+          stock: true,
+          brandID: "",
+          categoryID: "",
+          remark: "",
+          isPublished: true,
+        });
+        SuccessDex(data.response);
+      } else {
+        ErrorDex(data.response);
+      }
     }
   };
 
@@ -158,7 +171,7 @@ const ProductForm = () => {
       <ToastContainer />
       {/* Product */}
       <form onSubmit={savetoServer}>
-        {id === undefined ? (
+        {!isUpdate ? (
           <HeaderProductAdd discardBtn={discardBtn} />
         ) : (
           <HeaderProductUpdate />

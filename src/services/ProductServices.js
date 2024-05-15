@@ -150,16 +150,96 @@ const AddProduct = async (req, res) => {
       });
     }
 
-    const isExits = await ProductModel.findOne({ title: title });
-    if (isExits) {
+    const productAdded = await ProductModel.create({
+      title: title,
+      shortDes: shortDes,
+      price: price,
+      discount: discount,
+      discountPrice: discountPrice,
+      stock: stock,
+      quantity: quantity,
+      remark: remark,
+      isPublished: isPublished,
+      categoryID: categoryID,
+      brandID: brandID,
+    });
+
+    const product_ID = productAdded._id;
+
+    if (product_ID == null) {
       return res.json({
         status: "warning",
-        response: `${title} already exists`,
+        response: "Something went wrong. Try again for add product data.",
+      });
+    }
+    await ProductDetailModel.create({
+      productID: product_ID,
+      image1: image1,
+      image2: image2,
+      image3: image3,
+      image4: image4,
+      image5: image5,
+      des: des,
+      color: color,
+      size: size,
+    });
+
+    return res.json({
+      status: "success",
+      response: `Product added successfully`,
+    });
+  } catch (error) {
+    res.json({ status: "error", response: error.message });
+  }
+};
+
+const UpdateProduct = async (req, res) => {
+  const id = new ObjectId(req.params.id);
+  try {
+    const {
+      title,
+      shortDes,
+      des,
+      image1,
+      image2,
+      image3,
+      image4,
+      image5,
+      color,
+      size,
+      price,
+      discountPrice,
+      discount,
+      quantity,
+      stock,
+      brandID,
+      categoryID,
+      remark,
+      isPublished,
+    } = req.body;
+
+    if (
+      title === "" &&
+      shortDes === "" &&
+      des === "" &&
+      image1 === "" &&
+      image2 === "" &&
+      image3 === "" &&
+      color === "" &&
+      size === "" &&
+      price === "" &&
+      quantity === "" &&
+      remark === "" &&
+      isPublished === ""
+    ) {
+      return res.json({
+        status: "warning",
+        response: "Please, fill-up all required data.",
       });
     }
 
-    const productAdded = await ProductModel.updateOne(
-      { title: title },
+    const productUpdated = await ProductModel.updateOne(
+      { _id: id },
       {
         title: title,
         shortDes: shortDes,
@@ -172,19 +252,17 @@ const AddProduct = async (req, res) => {
         isPublished: isPublished,
         categoryID: categoryID,
         brandID: brandID,
-      },
-      { upsert: true }
+      }
     );
 
-    if (!productAdded.acknowledged === true) {
+    if (!productUpdated.acknowledged === true) {
       return res.json({
         status: "warning",
         response: "Something went wrong. Try again for add product data.",
       });
     }
-    const product_ID = productAdded.upsertedId;
     const productDetailAdded = await ProductDetailModel.updateOne(
-      { productID: product_ID },
+      { productID: id },
       {
         image1: image1,
         image2: image2,
@@ -194,27 +272,13 @@ const AddProduct = async (req, res) => {
         des: des,
         color: color,
         size: size,
-      },
-      { upsert: true }
-    );
-    if (productDetailAdded.acknowledged === true) {
-      if (productDetailAdded.modifiedCount > 0) {
-        return res.json({
-          status: "success",
-          response: `Product updated successfully`,
-        });
-      } else if (productDetailAdded.upsertedCount > 0) {
-        return res.json({
-          status: "success",
-          response: `Product added successfully`,
-        });
-      } else {
-        return res.json({
-          status: "warning",
-          response: "Something went wrong. Try again for add product data.",
-        });
       }
-    }
+    );
+
+    return res.json({
+      status: "success",
+      response: `Product updated successfully`,
+    });
   } catch (error) {
     res.json({ status: "error", response: error.message });
   }
@@ -312,10 +376,8 @@ const ViewProductForEdit = async (req, res) => {
 const DeleteProduct = async (req, res) => {
   try {
     const id = new ObjectId(req.params.id);
-
-    console.log(id);
-    await ProductModel.Delete({ _id: id });
-    await ProductDetailModel.Delete({ productID: id });
+    await ProductModel.findByIdAndDelete(id);
+    await ProductDetailModel.findByIdAndDelete(id);
     res.json({ status: "success", response: "Product deleted successfully" });
   } catch (error) {
     res.json({ status: "error", response: error.message });
@@ -330,6 +392,7 @@ export default {
   ViewCategoryList,
   ViewCategoryListByID,
   AddProduct,
+  UpdateProduct,
   ViewProductList,
   ViewProductForEdit,
   DeleteProduct,

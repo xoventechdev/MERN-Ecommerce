@@ -29,6 +29,15 @@ export const addProductToServer = async (data) => {
   }
 };
 
+export const updateProductToServer = async (id, data) => {
+  try {
+    const res = await axios.post(`${BaseUrl}/updateProduct/${id}`, data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getProductList = async () => {
   try {
     const res = await axios.get(`${BaseUrl}/getProductList`);
