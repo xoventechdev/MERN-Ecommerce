@@ -49,6 +49,7 @@ const ProductForm = ({ isUpdate }) => {
   useEffect(() => {
     if (isUpdate) {
       getProduct();
+      console.log(product)
     }
     getBrand();
     getCategory();

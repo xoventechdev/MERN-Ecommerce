@@ -8,7 +8,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import apiRoutes from "./src/routes/APIRoutes.js";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
 
 const app = express();
 app.use(hpp());

@@ -38,7 +38,11 @@ const AddBrandList = async (req, res) => {
 
 const ViewBrandList = async (req, res) => {
   try {
-    const list = await BrandModel.find();
+    const list = await BrandModel.aggregate([
+      {$project: 
+        {createdAt: 0, updatedAt:0}
+      }
+    ]);
     res.json({ status: "success", response: list });
   } catch (error) {
     res.json({ status: "error", response: error.message });
